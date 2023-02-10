@@ -1,35 +1,26 @@
 const express = require('express')
 const dotenv = require('dotenv')
-const knexConfig = require('./db/knexfile')
 const helmet = require('helmet')
 const hpp = require('hpp')
 const cors = require('cors')
+const knex = require('./db/db')
+const userRouter = require('./routes/user')
 
+//set port
 dotenv.config()
 const PORT = process.env.PORT || 6006
 
-const knex = require('knex')(knexConfig[process.env.NODE_ENV])
+//create express instance
 const app = express()
-const router = express.Router()
 
+//middleware
 app.use(helmet())
 app.use(hpp())
 
 //routes
-/* temp... */
-app.use(router)
-router.get("/", async (_, res) => {
+app.use('/api/v1/user', userRouter)
 
-    const q = await knex
-        .select("*")
-        .from('test')
-
-    res.json({
-        data: q
-    })
-})
-/* ... */
-
+//listen for requests
 app.listen(PORT, console.log(`listening on ${PORT}`))
 
 //handle unhandled promise rejections
