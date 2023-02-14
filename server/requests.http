@@ -1,0 +1,38 @@
+# user routes
+## get all users
+GET http://localhost:6006/api/v1/users
+
+## get a user
+GET http://localhost:6006/api/v1/users/squiddy
+
+## delete a user
+DELETE http://localhost:6006/api/v1/users/
+
+
+# auth routes
+## sign up
+POST http://localhost:6006/api/v1/auth/signup
+Content-Type: application/json
+
+{
+    "username": "cam",
+    "email": "cHowe@mutiny.net",
+    "password": "mrsmcmillian"
+}
+
+## sign in
+POST http://localhost:6006/api/v1/auth/signin
+Content-Type: application/json
+
+{
+    "email": "cHowe@mutiny.net",
+    "password": "mrsmcmillian"
+}
+
+## get self
+GET http://localhost:6006/api/v1/auth/getself
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNIb3dlQG11dGlueS5uZXQiLCJpYXQiOjE2NzYzMzE4MDN9.smMAUZo5hzynFep-fBX2bhJ-cG50ak_jWHt1qUsGGa0
+
+## delete self
+DELETE http://localhost:6006/api/v1/auth/deleteself
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNIb3dlQG11dGlueS5uZXQiLCJpYXQiOjE2NzYzMzE4MDN9.smMAUZo5hzynFep-fBX2bhJ-cG50ak_jWHt1qUsGGa0

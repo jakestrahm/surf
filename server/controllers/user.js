@@ -1,16 +1,11 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt')
-const knex = require("../db/db")
-
 exports.getUsers = async (_, res) => {
-    //todo further refining?
     try {
-        const queryResult = await knex
+        const users = await knex
             .select("*")
             .from('users')
 
         res.json({
-            data: queryResult
+            users
         })
     }
     catch (err) {
@@ -23,13 +18,17 @@ exports.getUsers = async (_, res) => {
 
 exports.getUser = async (req, res) => {
     try {
-        const queryResult = await knex
+        const user = await knex
             .select("*")
             .from('users')
-            .where('id', req.params.id)
+            .where('username', req.params.username)
+
+        if (user.length == 0) {
+            throw new Error(`no account with username ${req.params.username}`)
+        }
 
         res.json({
-            data: queryResult
+            user
         })
     }
     catch (err) {
@@ -40,19 +39,25 @@ exports.getUser = async (req, res) => {
     }
 }
 
-exports.postUser = async (req, res) => {
+exports.deleteUser = async (req, res) => {
     try {
-        const queryResult = await knex
-            .
+        const affected = await knex('users')
+            .where('id', req.params.id)
+            .del()
 
-            res.json({
-                data: queryResult
-            })
+        if (!affected) {
+            throw new Error(`no user with id ${req.params.id}`)
+        }
+
+        res.json({
+            success: true
+        })
     }
     catch (err) {
         console.error(err)
         res.json({
-            errorMessage: err.message
+            errorMessage: err.message,
         })
     }
 }
+
